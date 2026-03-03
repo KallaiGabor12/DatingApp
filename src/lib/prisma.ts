@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { PrismaMariaDb } from "@prisma/adapter-mariadb";
+import { PrismaPg } from "@prisma/adapter-pg";
 
 const globalForPrisma = global as unknown as { prisma: PrismaClient };
 
@@ -17,7 +17,7 @@ function createAdapter() {
   const password = url.password;
   const database = url.pathname.slice(1); // Remove leading '/'
 
-  return new PrismaMariaDb({
+  return new PrismaPg({
     host,
     port,
     user,

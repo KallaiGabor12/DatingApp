@@ -13,6 +13,7 @@ export default async function RootLayout({
   return (
         <main className="grow" id="hero-content">
           {children}
+          <Footer/>
         </main>
   )
 }
