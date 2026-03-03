@@ -1,0 +1,13 @@
+* {
+    font-family: "Montserrat", sans-serif !important;
+    scroll-padding-top: 80px;
+}
+@media screen and (min-width: 1024px) {
+    *{scroll-padding-top: 135px;}
+}
+h1,h2{
+    font-weight: bold;
+}
+html{
+    scroll-behavior: smooth;
+}

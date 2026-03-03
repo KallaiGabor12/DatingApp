@@ -1,0 +1,55 @@
+datasource db {
+  provider = "mysql"
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x"]
+}
+
+model User {
+  id            Int                  @id @default(autoincrement())
+  email         String               @unique @db.VarChar(2048)
+  password      String
+  dateCreated   DateTime             @default(now())
+  lastEdited    DateTime             @default(now())
+  active        Boolean              @default(true)
+  token_version Int                  @default(1)
+  passReset     PasswordResetToken[]
+}
+
+model PasswordResetToken {
+  id          Int      @id @default(autoincrement())
+  token       String   @unique
+  dateCreated DateTime @default(now())
+  valid       Int      @default(600) //seconds, default is 10 mins
+  user        User     @relation(fields: [userID], references: [id], onDelete: Cascade)
+  userID      Int
+}
+
+model Attempt {
+  id          Int         @id @default(autoincrement())
+  sessionID   String
+  type        AttemptType
+  lastTry     Int //timestamp
+  tries       Int
+  bannedUntil Int //timestamp
+}
+
+enum AttemptType {
+  LOGIN
+  RESET
+}
+
+model Log {
+  id      BigInt   @id @default(autoincrement())
+  date    DateTime
+  type    LogType
+  message String
+}
+
+enum LogType {
+  LOG
+  WARN
+  ERROR
+}
