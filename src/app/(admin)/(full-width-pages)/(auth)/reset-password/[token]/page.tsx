@@ -1,18 +1,9 @@
 import PasswordResetStage from "@/components/auth/PasswordResetStage";
 import { prisma } from "@/lib/prisma";
-import { Metadata } from "next";
 import { cookies } from "next/headers";
 import { getIronSession } from "iron-session";
 import { SessionData, sessionOptions, checkBan, trackAttempt } from "@/lib/session";
 import { AttemptType } from "@prisma/client";
-
-export const metadata: Metadata = {
-  title: "Elfelejtett jelszó helyreállítása - COOL-FINISH KFT.",
-  robots: {
-    index: false,
-    follow: false,
-  },
-};
 
 export default async function ResetWithToken({
   params
