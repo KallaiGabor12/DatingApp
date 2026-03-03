@@ -10,64 +10,82 @@ export default async function ResetWithToken({
 }: {
   params: Promise<{ token: string }>
 }) {
-  const {token} = await params;
+  const { token } = await params;
+
   let isValidToken = false;
   let server_error: string | null = null;
   let isBanned = false;
 
   if (!token) {
-    return <div>Token hiányzik</div>;
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-pink-50 via-white to-rose-100">
+        <div className="p-8 bg-white shadow-xl rounded-2xl text-center max-w-md">
+          <h1 className="text-2xl font-bold mb-2">Oops 💔</h1>
+          <p className="text-gray-500">
+            This reset link seems incomplete or missing.
+          </p>
+        </div>
+      </div>
+    );
   }
 
   try {
-    // Get session for attempt tracking
     const cookieStore = await cookies();
     const session = await getIronSession<SessionData>(cookieStore, sessionOptions);
-    
-    // Generate session ID if it doesn't exist
+
     if (!session.sessionId) {
-      session.sessionId = `session_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
+      session.sessionId = `session_${Date.now()}_${Math.random()
+        .toString(36)
+        .substring(2, 15)}`;
       await session.save();
     }
-    
+
     const sessionId = session.sessionId!;
 
-    // Check if banned
+    // Check if temporarily blocked
     const banCheck = await checkBan(sessionId, AttemptType.RESET);
+
     if (banCheck.isBanned) {
       isBanned = true;
-      server_error = "Túl sok sikertelen kísérlet. Kérjük, próbálja újra később.";
-      return <PasswordResetStage 
-        isValidToken={false}
-        server_error={server_error}
-        token={token}
-        isBanned={isBanned}
-      />;
+      server_error =
+        "Too many attempts 💔 Please wait a little before trying again.";
+      
+      return (
+        <PasswordResetStage
+          isValidToken={false}
+          server_error={server_error}
+          token={token}
+          isBanned={isBanned}
+        />
+      );
     }
 
-    // Call your database directly - no API route needed!
     const record = await prisma.passwordResetToken.findFirst({
-      where: { token: token }
+      where: { token }
     });
 
     if (!record || record.dateCreated.getTime() < Date.now() - record.valid * 1000) {
       isValidToken = false;
-      server_error = "Érvénytelen vagy lejárt token";
-      // Track invalid attempt
+      server_error =
+        "This reset link has expired or is no longer valid 💌 Please request a new one.";
+      
       await trackAttempt(sessionId, AttemptType.RESET, true);
     } else {
       isValidToken = true;
-      // Valid token - reset attempt counter
       await trackAttempt(sessionId, AttemptType.RESET, false);
     }
+
   } catch (err: any) {
-    server_error = err?.message ?? "Unknown error";
+    server_error =
+      "Something unexpected happened. Please try again.";
   }
 
-  return <PasswordResetStage 
-    isValidToken={isValidToken}
-    server_error={server_error}
-    token={token}
-    isBanned={isBanned}
-    />;
+  return (
+    <PasswordResetStage
+      isValidToken={isValidToken}
+      server_error={server_error}
+      token={token}
+      isBanned={isBanned}
+    />
+  );
 }
