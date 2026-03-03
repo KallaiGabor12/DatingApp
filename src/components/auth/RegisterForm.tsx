@@ -8,18 +8,17 @@ import React, { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 
-export default function RegisterForm() {
+export default function DatingRegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    confirmPassword: "",
-    role: "user"
+    confirmPassword: ""
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  
+
   const { register } = useAuth();
   const router = useRouter();
 
@@ -29,23 +28,30 @@ export default function RegisterForm() {
     setError("");
 
     if (formData.password !== formData.confirmPassword) {
-      setError("A jelszavak nem egyeznek");
+      setError("Passwords don’t match 💔");
       setIsLoading(false);
       return;
     }
 
     try {
-      let resp = await register({email:formData.email, password:formData.password});
-      if(resp.success) router.push("/admin");
-      setError(resp.message!)
+      const resp = await register({
+        email: formData.email,
+        password: formData.password
+      });
+
+      if (resp.success) router.push("/discover");
+      if (!resp.success) setError(resp.message!);
     } catch (error: any) {
-      setError(error.response?.data?.message || "Regisztráció sikertelen");
+      setError(
+        error.response?.data?.message ||
+          "Something went wrong. Please try again."
+      );
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prev => ({
       ...prev,
       [e.target.name]: e.target.value
@@ -53,131 +59,112 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className="flex flex-col flex-1 lg:w-1/2 w-full">
-      <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
-        <div>
-          <div className="mb-5 sm:mb-8">
-            <h1 className="mb-2 font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md">
-              Regisztráció
+    <div className="h-screen flex flex-col flex-1 w-full bg-gradient-to-br from-rose-50 via-white to-pink-100 dark:from-gray-900 dark:to-gray-950">
+      <div className="flex flex-col justify-center flex-1 w-full max-w-md px-6 mx-auto">
+        <div className="p-8 bg-white shadow-xl dark:bg-gray-900 rounded-2xl">
+          
+          <div className="mb-8 text-center">
+            <h1 className="mb-2 text-3xl font-bold text-gray-800 dark:text-white">
+              Create your profile ✨
             </h1>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Hozzon létre egy új fiókot!
+              Join and start discovering meaningful connections today.
             </p>
           </div>
-          <div>
-            <div className="relative py-3 sm:py-5">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-200 dark:border-gray-800"></div>
+
+          <form onSubmit={handleSubmit}>
+            <div className="space-y-6">
+              {error && (
+                <div className="p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg">
+                  {error}
+                </div>
+              )}
+
+              <div>
+                <Label>Email</Label>
+                <Input
+                  placeholder="you@example.com"
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
               </div>
-            </div>
-            <form onSubmit={handleSubmit}>
-              <div className="space-y-6">
-                {error && (
-                  <div className="p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md">
-                    {error}
-                  </div>
-                )}
-                <div>
-                  <Label>
-                    Email <span className="text-error-500">*</span>{" "}
-                  </Label>
-                  <Input 
-                    placeholder="info@gmail.com" 
-                    type="email" 
-                    name="email"
-                    value={formData.email}
+
+              <div>
+                <Label>Password</Label>
+                <div className="relative">
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Create a secure password"
+                    name="password"
+                    value={formData.password}
                     onChange={handleChange}
                     required
                   />
-                </div>
-                <div>
-                  <Label>
-                    Jelszó <span className="text-error-500">*</span>{" "}
-                  </Label>
-                  <div className="relative">
-                    <Input
-                      type={showPassword ? "text" : "password"}
-                      placeholder="Adja meg a jelszavát"
-                      name="password"
-                      value={formData.password}
-                      onChange={handleChange}
-                      required
-                    />
-                    <span
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2"
-                    >
-                      {showPassword ? (
-                        <EyeIcon className="fill-gray-500 dark:fill-gray-400" />
-                      ) : (
-                        <EyeCloseIcon className="fill-gray-500 dark:fill-gray-400" />
-                      )}
-                    </span>
-                  </div>
-                </div>
-                <div>
-                  <Label>
-                    Jelszó megerősítése <span className="text-error-500">*</span>{" "}
-                  </Label>
-                  <div className="relative">
-                    <Input
-                      type={showConfirmPassword ? "text" : "password"}
-                      placeholder="Adja meg a jelszavát újra"
-                      name="confirmPassword"
-                      value={formData.confirmPassword}
-                      onChange={handleChange}
-                      required
-                    />
-                    <span
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      className="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2"
-                    >
-                      {showConfirmPassword ? (
-                        <EyeIcon className="fill-gray-500 dark:fill-gray-400" />
-                      ) : (
-                        <EyeCloseIcon className="fill-gray-500 dark:fill-gray-400" />
-                      )}
-                    </span>
-                  </div>
-                </div>
-                <div>
-                  <Label>
-                    Szerepkör <span className="text-error-500">*</span>{" "}
-                  </Label>
-                  <select
-                    name="role"
-                    value={formData.role}
-                    onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
-                    required
+                  <span
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2"
                   >
-                    <option value="user">Felhasználó</option>
-                    <option value="admin">Adminisztrátor</option>
-                  </select>
-                </div>
-                <div>
-                  <Button 
-                    className="w-full" 
-                    size="sm" 
-                    type="submit"
-                    disabled={isLoading}
-                  >
-                    {isLoading ? "Regisztráció..." : "Regisztráció"}
-                  </Button>
-                </div>
-                <div className="text-center">
-                  <p className="text-sm text-gray-500">
-                    Már van fiókja?{" "}
-                    <Link
-                      href="/login"
-                      className="text-brand-500 hover:text-brand-600 dark:text-brand-400"
-                    >
-                      Bejelentkezés
-                    </Link>
-                  </p>
+                    {showPassword ? (
+                      <EyeIcon className="fill-gray-500 dark:fill-gray-400" />
+                    ) : (
+                      <EyeCloseIcon className="fill-gray-500 dark:fill-gray-400" />
+                    )}
+                  </span>
                 </div>
               </div>
-            </form>
+
+              <div>
+                <Label>Confirm Password</Label>
+                <div className="relative">
+                  <Input
+                    type={showConfirmPassword ? "text" : "password"}
+                    placeholder="Repeat your password"
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    required
+                  />
+                  <span
+                    onClick={() =>
+                      setShowConfirmPassword(!showConfirmPassword)
+                    }
+                    className="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2"
+                  >
+                    {showConfirmPassword ? (
+                      <EyeIcon className="fill-gray-500 dark:fill-gray-400" />
+                    ) : (
+                      <EyeCloseIcon className="fill-gray-500 dark:fill-gray-400" />
+                    )}
+                  </span>
+                </div>
+              </div>
+
+              <Button
+                className="w-full bg-pink-500 hover:bg-pink-600"
+                size="sm"
+                type="submit"
+                disabled={isLoading}
+              >
+                {isLoading ? "Creating your profile..." : "Start Your Journey 💕"}
+              </Button>
+
+              <div className="text-center text-sm text-gray-500 dark:text-gray-400">
+                Already have an account?{" "}
+                <Link
+                  href="/login"
+                  className="text-pink-500 hover:text-pink-600"
+                >
+                  Sign in ❤️
+                </Link>
+              </div>
+            </div>
+          </form>
+
+          <div className="mt-6 text-xs text-center text-gray-400">
+            By joining, you agree to treat others with kindness and respect 💌
           </div>
         </div>
       </div>
