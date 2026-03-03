@@ -27,7 +27,7 @@ export function PasswordChangedEmail({userid}:{userid:number}) {
       <Tailwind config={emailTailwindConfig}>
         <Body className="bg-gray-100 w-full">
           <Container className="bg-white p-8 rounded-lg shadow w-8/12 mx-auto py-12 px-20 max-w-2xl">
-            <Text className="text-2xl text-center font-bold">Cool-Finish Kft.</Text>
+            <Text className="text-2xl text-center font-bold">Dating app</Text>
             <br />
             <Text className="text-center text-desktop-p!">A jelszava megváltozott.</Text>
             <Text className="text-center text-desktop-p! px-10">Ha ez nem az Ön vagy egy Ön által meghatalmazott tevékenysége volt, azonnal vegye fel a kapcsolatot a rendszergazdával és továbbítsa a következő információt: <br /> id={userid}</Text>
