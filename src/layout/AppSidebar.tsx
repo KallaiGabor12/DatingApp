@@ -36,6 +36,11 @@ const othersItems: NavItem[] = [
     name:"Rendszernapló",
     path:"/profile/logs",
   },
+  {
+    icon: <Image src="/images/icons/logs.png" alt="napló" width={24} height={24} className="opacity-50" />,
+    name:"SWIPING",
+    path:"/",
+  },
 ];
 
 const welcomeNavItems: NavItem[] = [
