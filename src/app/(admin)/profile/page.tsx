@@ -4,6 +4,6 @@ import { prisma } from "@/lib/prisma";
 
 export default async function ProfilePage(){
   return <>
-    <h1>ez most így nem működne btw</h1>
+    <ProfileComponent />
   </>
 }

@@ -3,15 +3,15 @@
 import { useState } from "react";
 import ComponentCard from "@/components/common/ComponentCard";
 
-export default function ProfileComponent({record}:{record: {avatar?: string, name?: string, age?: number, email: string, description?:string, hobbies?: string}}) {
+export default function ProfileComponent({record}:{record?: {avatar?: string, name?: string, age?: number, email: string, description?:string, hobbies?: string}}) {
   // Sample frontend-only profile state
   const [profile, setProfile] = useState({
-    avatar: record.avatar,
-    name: record.name,
-    age: record.age,
-    email: record.email,
-    description: record.description,
-    hobbies: record.hobbies?.split(', ') ?? [],
+    avatar: record?.avatar,
+    name: record?.name ?? "NOT SET",
+    age: record?.age ?? "NOT SET",
+    email: record?.email ?? "NOT SET",
+    description: record?.description,
+    hobbies: record?.hobbies?.split(', ') ?? [],
   });
 
   const [editField, setEditField] = useState<string | null>(null);
