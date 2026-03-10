@@ -35,7 +35,7 @@ export async function proxy(request: NextRequest) {
     let isAuthenticated = await jwt.verifyToken(cookie.value, "refresh") != null;
 
     if(isAuthenticated){
-      return NextResponse.redirect(new URL("/admin", request.url));
+      return NextResponse.redirect(new URL("/profile", request.url));
     }
   }
 
