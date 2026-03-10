@@ -22,15 +22,25 @@ const navItems: NavItem[] = [
 
 const othersItems: NavItem[] = [
   {
+    icon: <Image src="/images/icons/profile.png" alt="napló" width={24} height={24} className="opacity-50" />,
+    name:"Profile",
+    path:"/profile",
+  },
+  {
     icon: <Image src="/images/icons/password.svg" alt="jelszó" width={24} height={24} className="opacity-50" />,
     name:"Jelszó megváltoztatása",
-    path:"/admin/changepass",
+    path:"/profile/changepass",
   },
   {
     icon: <Image src="/images/icons/logs.png" alt="napló" width={24} height={24} className="opacity-50" />,
     name:"Rendszernapló",
-    path:"/admin/logs",
-  }
+    path:"/profile/logs",
+  },
+  {
+    icon: <Image src="/images/icons/logs.png" alt="napló" width={24} height={24} className="opacity-50" />,
+    name:"SWIPING",
+    path:"/",
+  },
 ];
 
 const welcomeNavItems: NavItem[] = [
@@ -261,7 +271,7 @@ const AppSidebar: React.FC = () => {
                 width={64}
                 height={64}
               />
-              <p className="text-3xl font-bold mx-auto text-center">Cool-Finish</p>
+              <p className="text-3xl font-bold mx-auto text-center">THING</p>
             </>
           ) : (
             <Image
@@ -289,11 +299,11 @@ const AppSidebar: React.FC = () => {
                     : "justify-start"
                 }`}
               >
-                {isExpanded || isHovered || isMobileOpen ? (
+                {/* {isExpanded || isHovered || isMobileOpen ? (
                   "Oldal"
                 ) : (
                   <HorizontaLDots />
-                )}
+                )} */}
               </h2>
               {renderMenuItems(navItems, "main")}
             </div>

@@ -60,7 +60,7 @@ export function RestorePasswordEmail({link}:{link:string}) {
       <Tailwind config={emailTailwindConfig}>
         <Body className="bg-gray-100 w-full">
           <Container className="bg-white p-8 rounded-lg shadow w-8/12 mx-auto py-12 px-20 max-w-2xl">
-            <Text className="text-2xl text-center font-bold">Cool-Finish Kft.</Text>
+            <Text className="text-2xl text-center font-bold">datingapp</Text>
             <br />
             <Text className="text-center text-desktop-p!">A jelszó megváltoztatásához kattintson ide:</Text>
             <Container className="w-max mx-auto">

@@ -3,7 +3,7 @@ import { NextRequest } from 'next/server';
 import { jwt } from './lib/jwt';
 
 // Define protected routes
-const protectedRoutes = ['/admin', '/'];
+const protectedRoutes = ['/'];
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -35,7 +35,7 @@ export async function proxy(request: NextRequest) {
     let isAuthenticated = await jwt.verifyToken(cookie.value, "refresh") != null;
 
     if(isAuthenticated){
-      return NextResponse.redirect(new URL("/admin", request.url));
+      return NextResponse.redirect(new URL("/profile", request.url));
     }
   }
 

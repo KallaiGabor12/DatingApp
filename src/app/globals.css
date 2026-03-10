@@ -1,31 +1,63 @@
 @import 'tailwindcss';
 
+@font-face {
+  font-family: SuperFunky;
+  src: url("/fonts/SuperFunky-lgmWw.ttf");
+}
+@font-face {
+  font-family: JetSetRadio;
+  src: url("/fonts/JetSet-8j1J.ttf");
+}
+
+.shakeLeft {
+  animation: shakingLeft 0.025s infinite;
+}
+.shakeRight {
+  animation: shakingRight 0.025s infinite;
+}
+
+@keyframes shakingRight {
+  0% { transform: translateY(0) translateX(0) }
+  25% { transform: translateY(-20px) translateX(20px) }
+  50% { transform: translateY(20px) translateX(-20px) }
+  75% { transform: translateY(-20px) translateX(20px) }
+  100% { transform: translateY(0) translateX(0) }
+}
+
+@keyframes shakingLeft {
+  0% { transform: translateY(0) translateX(0) }
+  25% { transform: translateY(20px) translateX(20px) }
+  50% { transform: translateY(-20px) translateX(-20px) }
+  75% { transform: translateY(20px) translateX(20px) }
+  100% { transform: translateY(0) translateX(0) }
+}
+
 ::-webkit-scrollbar{
-  background-color: #e0f4ff;
+  background-color: #d394d7;
   width: 10px;
   height: 10px;
 }
 ::-webkit-scrollbar-thumb{
-  background-color: #2C8CBE;
+  background-color: #eb4394;
   border-radius: 5px;
-  border: 3px solid #e0f4ff;
+  border: 3px solid #d394d7;
 }
 ::-webkit-scrollbar-thumb:hover{
-  border: 1px solid #e0f4ff;
-  background-color: rgb(16, 106, 155);
+  border: 1px solid #d394d7;
+  background-color: rgb(201, 69, 216);
   cursor: pointer;
 }
 ::-webkit-scrollbar-track{
-  background-color: #e0f4ff;
+  background-color: #d394d7;
   width: 10px;
 }
 ::-webkit-scrollbar-button{
-  background-color: #2c8bbea1;
+  background-color: #a822b7a1;
   cursor: pointer;
   height: 12px;
 }
 ::-webkit-scrollbar-button:hover{
-  background-color: rgb(16, 106, 155);
+  background-color: rgb(188, 13, 194);
 }
 
 @custom-variant dark (&:is(.dark *));
@@ -33,6 +65,8 @@
 @theme {
   --font-*: initial;
   --font-outfit: Outfit, sans-serif;
+  --font-superfunky: SuperFunky, sans-serif;
+  --font-jetsetradio: JetSetRadio, sans-serif;
 
   --breakpoint-*: initial;
   --breakpoint-2xsm: 375px;
@@ -162,7 +196,7 @@
 
   --color-theme-purple-500: #7a5af8;
 
-  /* COOL FINISH */
+  /* project */
   --color-dark: #011111;
   --color-default: #2f3538;
   --color-main: #287CA9;
