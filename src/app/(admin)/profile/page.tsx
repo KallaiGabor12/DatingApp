@@ -6,8 +6,7 @@ import ComponentCard from "@/components/common/ComponentCard";
 export default function ProfilePage() {
   // Sample frontend-only profile state
   const [profile, setProfile] = useState({
-    avatar:
-      "https://i.pravatar.cc/150?img=12", // placeholder avatar
+    avatar: "https://i.pravatar.cc/150?img=12",
     name: "John Doe",
     age: 28,
     email: "johndoe@example.com",
@@ -15,11 +14,9 @@ export default function ProfilePage() {
     hobbies: ["Hiking", "Photography", "Gaming"],
   });
 
-  // Editable states for each field
   const [editField, setEditField] = useState<string | null>(null);
   const [fieldValue, setFieldValue] = useState<any>("");
 
-  // Generic save function for each field
   const handleEdit = (field: string) => {
     setEditField(field);
     setFieldValue(profile[field as keyof typeof profile]);
@@ -31,19 +28,24 @@ export default function ProfilePage() {
     console.log(`Saved ${field}:`, fieldValue);
   };
 
+  const handleCancel = () => {
+    setFieldValue(""); // reset temporary value
+    setEditField(null); // exit edit mode
+  };
+
   return (
     <div className="max-w-3xl mx-auto px-4 py-6">
       <h1 className="text-2xl font-semibold mb-4">Your Profile</h1>
 
       <ComponentCard title="Profile Info">
         {/* Profile Picture */}
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-6 mb-4">
           <img
             src={profile.avatar}
             alt="Avatar"
             className="w-24 h-24 rounded-full object-cover border border-gray-200 dark:border-gray-700"
           />
-          <div>
+          <div className="flex-1">
             <label className="block mb-1 text-gray-600 dark:text-gray-400">
               Avatar URL
             </label>
@@ -60,6 +62,12 @@ export default function ProfilePage() {
                   className="bg-brand-500 text-white px-3 py-1 rounded"
                 >
                   Save
+                </button>
+                <button
+                  onClick={handleCancel}
+                  className="bg-gray-300 text-gray-700 px-3 py-1 rounded"
+                >
+                  Cancel
                 </button>
               </div>
             ) : (
@@ -83,6 +91,7 @@ export default function ProfilePage() {
           setFieldValue={setFieldValue}
           handleEdit={handleEdit}
           handleSave={handleSave}
+          handleCancel={handleCancel}
         />
 
         {/* Age */}
@@ -95,6 +104,7 @@ export default function ProfilePage() {
           setFieldValue={setFieldValue}
           handleEdit={handleEdit}
           handleSave={handleSave}
+          handleCancel={handleCancel}
         />
 
         {/* Email */}
@@ -107,6 +117,7 @@ export default function ProfilePage() {
           setFieldValue={setFieldValue}
           handleEdit={handleEdit}
           handleSave={handleSave}
+          handleCancel={handleCancel}
         />
 
         {/* Description */}
@@ -119,6 +130,7 @@ export default function ProfilePage() {
           setFieldValue={setFieldValue}
           handleEdit={handleEdit}
           handleSave={handleSave}
+          handleCancel={handleCancel}
         />
 
         {/* Hobbies */}
@@ -132,40 +144,48 @@ export default function ProfilePage() {
             ))}
           </ul>
           {editField === "hobbies" ? (
-  <div className="flex gap-2">
-    <input
-      type="text"
-      value={fieldValue}
-      onChange={(e) => setFieldValue(e.target.value)}
-      placeholder="Comma-separated hobbies"
-      className="border rounded px-2 py-1 w-full"
-    />
-    <button
-      onClick={() => {
-        // Save hobbies properly
-        setProfile((prev) => ({
-          ...prev,
-          hobbies: fieldValue.split(",").map((h: string) => h.trim()),
-        }));
-        setEditField(null);
-        console.log("Saved hobbies:", fieldValue.split(",").map((h: string) => h.trim()));
-      }}
-      className="bg-brand-500 text-white px-3 py-1 rounded"
-    >
-      Save
-    </button>
-  </div>
-) : (
-  <button
-    onClick={() => {
-      setEditField("hobbies");
-      setFieldValue(profile.hobbies.join(", "));
-    }}
-    className="text-sm text-brand-500 hover:text-brand-600"
-  >
-    Edit
-  </button>
-)}
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={fieldValue}
+                onChange={(e) => setFieldValue(e.target.value)}
+                placeholder="Comma-separated hobbies"
+                className="border rounded px-2 py-1 w-full"
+              />
+              <button
+                onClick={() => {
+                  setProfile((prev) => ({
+                    ...prev,
+                    hobbies: fieldValue.split(",").map((h: string) => h.trim()),
+                  }));
+                  setEditField(null);
+                  console.log(
+                    "Saved hobbies:",
+                    fieldValue.split(",").map((h: string) => h.trim())
+                  );
+                }}
+                className="bg-brand-500 text-white px-3 py-1 rounded"
+              >
+                Save
+              </button>
+              <button
+                onClick={handleCancel}
+                className="bg-gray-300 text-gray-700 px-3 py-1 rounded"
+              >
+                Cancel
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => {
+                setEditField("hobbies");
+                setFieldValue(profile.hobbies.join(", "));
+              }}
+              className="text-sm text-brand-500 hover:text-brand-600"
+            >
+              Edit
+            </button>
+          )}
         </div>
       </ComponentCard>
     </div>
@@ -182,6 +202,7 @@ interface FieldEditorProps {
   setFieldValue: React.Dispatch<React.SetStateAction<any>>;
   handleEdit: (field: string) => void;
   handleSave: (field: string) => void;
+  handleCancel: () => void;
 }
 
 const FieldEditor: React.FC<FieldEditorProps> = ({
@@ -193,11 +214,12 @@ const FieldEditor: React.FC<FieldEditorProps> = ({
   setFieldValue,
   handleEdit,
   handleSave,
+  handleCancel,
 }) => (
-  <div>
+  <div className="mb-3">
     <label className="block mb-1 text-gray-600 dark:text-gray-400">{label}</label>
     {editField === field ? (
-      <div className="flex gap-2 mb-3">
+      <div className="flex gap-2">
         <input
           type={typeof value === "number" ? "number" : "text"}
           value={fieldValue}
@@ -210,9 +232,15 @@ const FieldEditor: React.FC<FieldEditorProps> = ({
         >
           Save
         </button>
+        <button
+          onClick={handleCancel}
+          className="bg-gray-300 text-gray-700 px-3 py-1 rounded"
+        >
+          Cancel
+        </button>
       </div>
     ) : (
-      <div className="flex justify-between items-center mb-3">
+      <div className="flex justify-between items-center">
         <span>{value}</span>
         <button
           onClick={() => handleEdit(field)}
