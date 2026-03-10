@@ -8,11 +8,11 @@ const mockProfiles: Profile[] = [
   // …more items or load from an API
 ];
 
-const SwipeDeck: React.FC = () => {
-  const [index, setIndex] = useState(0);
-  
+const SwipeDeck: React.FC<{onSwipe:()=>void}> = ({ onSwipe }) => {
+  const [index, setIndex] = useState(0);  
 
   const advance = () => {
+    onSwipe && onSwipe()
     setIndex(i => (i + 1 < mockProfiles.length ? i + 1 : i));
   };
 

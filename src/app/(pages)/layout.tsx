@@ -11,7 +11,7 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
   return (
-        <main className="grow" id="hero-content">
+        <main className="grow bg-black overflow-x-hidden" id="hero-content">
           {children}
           <Footer/>
         </main>
