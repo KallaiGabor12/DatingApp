@@ -4,8 +4,8 @@ import ComponentCard from "@/components/common/ComponentCard";
 
 export default function UserManual() {
   return (<>
-    <PageBreadcrumb pageTitle="Használati útmutató" />
-    <ComponentCard title="Jelszó megváltoztatása (bejelentkezve)" className="my-4">
+    <PageBreadcrumb pageTitle="Settings" />
+    <ComponentCard title="Your Profile" className="my-4">
       this is your profile page
     </ComponentCard>
   </>);
