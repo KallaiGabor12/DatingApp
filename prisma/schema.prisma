@@ -17,6 +17,10 @@ model User {
   token_version Int                  @default(1)
   passReset     PasswordResetToken[]
   picture       String?
+  hobbies       String?  
+  name          String?
+  age           Int?
+  description   String?
 }
 
 model PasswordResetToken {
