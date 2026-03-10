@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import Card, { Profile } from "./Card";
 
 const mockProfiles: Profile[] = [
-  { id: 1, name: "Alice", age: 25, bio: "Loves hiking.", image: "/profiles/alice.jpg" },
-  { id: 2, name: "Bob", age: 28, bio: "Coffee addict.", image: "/profiles/bob.jpg" },
-  { id: 3, name: "Charlie", age: 32, bio: "Guitarist.", image: "/profiles/charlie.jpg" },
+  { id: 1, name: "Alice", age: 25, bio: "Loves hiking.", image: "/images/Alice.webp" },
+  { id: 2, name: "Bob", age: 28, bio: "Coffee addict.", image: "/images/Bob.webp" },
+  { id: 3, name: "Charlie", age: 32, bio: "Guitarist.", image: "/images/Charlie.webp" },
   // …more items or load from an API
 ];
 

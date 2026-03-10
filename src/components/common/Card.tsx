@@ -67,7 +67,8 @@ const Card: React.FC<CardProps> = ({
   return (
     <motion.div
       className={`bg-white rounded-4xl aspect-9/16 h-[40vh] md:h-[69vh] mx-auto ${className}`}
-      style={{ ...style, x, rotate }}
+      // make sure the image is clipped to the rounded corners
+      style={{ overflow: "hidden", ...style, x, rotate }}
       animate={controls}
       drag="x"
       dragConstraints={{ left: 0, right: 0 }}
