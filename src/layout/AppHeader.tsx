@@ -89,7 +89,7 @@ const AppHeader: React.FC = () => {
               src="/images/brand/logo.png"
               alt="Logo"
             />
-            <h2 className="font-bold text-tablet-h2">Cool-Finish Kft.</h2>
+            <h2 className="font-bold text-tablet-h2">THING</h2>
           </Link>
 
           <button

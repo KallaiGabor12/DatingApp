@@ -51,7 +51,7 @@ export default function DatingSignInForm() {
 
     try {
       const resp = await login({ email, password });
-      if (resp.success) router.push("/discover");
+      if (resp.success) router.push("/profile");
       setError(!resp.success ? resp.message! : "");
     } catch (error: any) {
       setError(

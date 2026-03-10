@@ -261,7 +261,7 @@ const AppSidebar: React.FC = () => {
                 width={64}
                 height={64}
               />
-              <p className="text-3xl font-bold mx-auto text-center">Cool-Finish</p>
+              <p className="text-3xl font-bold mx-auto text-center">THING</p>
             </>
           ) : (
             <Image

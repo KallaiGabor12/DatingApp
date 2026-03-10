@@ -3,7 +3,7 @@ import { NextRequest } from 'next/server';
 import { jwt } from './lib/jwt';
 
 // Define protected routes
-const protectedRoutes = ['/admin', '/'];
+const protectedRoutes = ['/'];
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;

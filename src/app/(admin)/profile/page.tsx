@@ -6,7 +6,7 @@ export default function UserManual() {
   return (<>
     <PageBreadcrumb pageTitle="Használati útmutató" />
     <ComponentCard title="Jelszó megváltoztatása (bejelentkezve)" className="my-4">
-      <h1>asd</h1>
+      this is your profile page
     </ComponentCard>
   </>);
 }

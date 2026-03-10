@@ -16,6 +16,7 @@ model User {
   active        Boolean              @default(true)
   token_version Int                  @default(1)
   passReset     PasswordResetToken[]
+  picture       String?
 }
 
 model PasswordResetToken {
