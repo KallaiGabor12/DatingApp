@@ -10,31 +10,31 @@
 }
 
 ::-webkit-scrollbar{
-  background-color: #e0f4ff;
+  background-color: #d394d7;
   width: 10px;
   height: 10px;
 }
 ::-webkit-scrollbar-thumb{
-  background-color: #2C8CBE;
+  background-color: #eb4394;
   border-radius: 5px;
-  border: 3px solid #e0f4ff;
+  border: 3px solid #d394d7;
 }
 ::-webkit-scrollbar-thumb:hover{
-  border: 1px solid #e0f4ff;
-  background-color: rgb(16, 106, 155);
+  border: 1px solid #d394d7;
+  background-color: rgb(201, 69, 216);
   cursor: pointer;
 }
 ::-webkit-scrollbar-track{
-  background-color: #e0f4ff;
+  background-color: #d394d7;
   width: 10px;
 }
 ::-webkit-scrollbar-button{
-  background-color: #2c8bbea1;
+  background-color: #a822b7a1;
   cursor: pointer;
   height: 12px;
 }
 ::-webkit-scrollbar-button:hover{
-  background-color: rgb(16, 106, 155);
+  background-color: rgb(188, 13, 194);
 }
 
 @custom-variant dark (&:is(.dark *));
