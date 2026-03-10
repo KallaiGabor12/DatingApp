@@ -84,11 +84,11 @@ const Card: React.FC<CardProps> = ({
         className="rounded-4xl object-cover w-full h-full"
       />
       <div className="absolute bottom-0 left-0 p-4 text-black bg-white/80 w-full rounded-b-4xl">
-        <h3 className="text-xl font-bold">
+        <h3 className="!font-superfunky text-xl font-bold">
           {profile.name}
           {profile.age && `, ${profile.age}`}
         </h3>
-        {profile.bio && <p className="text-sm">{profile.bio}</p>}
+        {profile.bio && <p className="!font-jetsetradio text-sm">{profile.bio}</p>}
       </div>
     </motion.div>
   );
