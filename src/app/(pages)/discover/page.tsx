@@ -1,3 +1,5 @@
 export default function DiscoverPage(){
-    return <h1>discover page</h1>
+    return <div>
+        <h1 className="text-4xl !font-jetsetradio">Are you ready?</h1>
+    </div>
 }

@@ -1,5 +1,14 @@
 @import 'tailwindcss';
 
+@font-face {
+  font-family: SuperFunky;
+  src: url("/fonts/SuperFunky-lgmWw.ttf");
+}
+@font-face {
+  font-family: JetSetRadio;
+  src: url("/fonts/JetSet-8j1J.ttf");
+}
+
 ::-webkit-scrollbar{
   background-color: #e0f4ff;
   width: 10px;
@@ -33,6 +42,8 @@
 @theme {
   --font-*: initial;
   --font-outfit: Outfit, sans-serif;
+  --font-superfunky: SuperFunky, sans-serif;
+  --font-jetsetradio: JetSetRadio, sans-serif;
 
   --breakpoint-*: initial;
   --breakpoint-2xsm: 375px;

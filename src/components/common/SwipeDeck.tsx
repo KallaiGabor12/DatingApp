@@ -19,23 +19,33 @@ const SwipeDeck: React.FC = () => {
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
+    
 
     audio.loop = true;
     audio.volume = 0.5; // adjust as desired
 
     // Try to play on mount; browsers may block autoplay until user interaction.
-    const tryPlay = async () => {
+    
+    const tryControl = async (play:boolean = true) => {
       try {
-        await audio.play();
+        if(play) await audio.play();
+        else await audio.pause();
       } catch (e) {
+        console.error(e) 
         // Autoplay blocked — user can start playback manually (browser policy).
         // You can optionally show a play button to start audio.
       }
     };
+    tryControl();
 
-    tryPlay();
+    const handleVisibilityChange = async() => {
+      tryControl(document.visibilityState === 'visible')
+    };
 
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange);
     return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       audio.pause();
       audio.currentTime = 0;
     };
@@ -46,7 +56,7 @@ const SwipeDeck: React.FC = () => {
   return (
     <div className="relative w-full h-full flex justify-center items-center">
       {/* Hidden audio element that plays the provided mp3 on repeat */}
-      <audio ref={audioRef} src="/music/background.mp3" aria-hidden="true" />
+      <audio id="audio" ref={audioRef} src="/music/sneakman.mp3" aria-hidden="true" />
 
       {stack
         .reverse() // render top card last so it’s on top
